@@ -1,5 +1,5 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./globals.css";
+import "./globals.scss";
 import { Inter } from "next/font/google";
 import { Container, SSRProvider } from "@/components/bootstrap";
 import NavBar from "./NavBar";
