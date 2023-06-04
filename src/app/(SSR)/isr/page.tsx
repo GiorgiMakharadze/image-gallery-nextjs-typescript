@@ -4,10 +4,10 @@ import { Alert } from "@/components/bootstrap";
 import { IUnsplashImage } from "@/types/unsplash-image";
 
 export const metadata = {
-  title: "Dynamic Fetching - NextJS Image galley",
+  title: "Incremental Static Regeneration - NextJS Image galley",
 };
 
-export const revalidate = 0;
+export const revalidate = 15;
 
 export default async function Page() {
   const response = await fetch(
@@ -22,8 +22,9 @@ export default async function Page() {
   return (
     <div className="d-flex flex-column align-items-center">
       <Alert>
-        This page <strong>fetches data dynamically</strong>. Every time you
-        refresh the page, you get a new image from the Unsplash API.
+        This page uses <strong>incremental static regeneration</strong>. A new
+        image is fetched every 15 seconds (after refreshing the page) and then
+        served from the cache for that duration.
       </Alert>
       <Image
         src={image.urls.raw}
