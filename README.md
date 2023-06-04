@@ -18,7 +18,7 @@ Download and run npm install, then create a .env.local file at the root of the p
 UNSPLASH_ACCESS_KEY=
 ```
 
-Mongo uri example:
+Unsplash url example:
 
 ```bash
 UNSPLASH_ACCESS_KEY=xp2Pc2riasfga23451C2Zcq7ExXp-DMv2agawehuyvZSUZsbYdoxagweg239NFDAdtU)
