@@ -2,7 +2,7 @@ import Image from "next/image";
 import { Metadata } from "next";
 import { Alert } from "@/components/bootstrap";
 import { IPageProps } from "@/types/pageTypes";
-import { IUnsplashImage } from "@/types/unsplash-image";
+import { IUnsplashImage } from "@/types/unsplashImageTypes";
 import styles from "./TopicPage.module.scss";
 
 export function generateMetadata({ params: { topic } }: IPageProps): Metadata {

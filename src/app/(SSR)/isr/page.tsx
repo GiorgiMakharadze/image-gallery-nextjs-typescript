@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Alert } from "@/components/bootstrap";
-import { IUnsplashImage } from "@/types/unsplash-image";
+import { IUnsplashImage } from "@/types/unsplashImageTypes";
 
 export const metadata = {
   title: "Incremental Static Regeneration - NextJS Image galley",
