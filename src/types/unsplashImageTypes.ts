@@ -10,3 +10,7 @@ export interface IUnsplashImage {
   width: number;
   height: number;
 }
+
+export interface IUnsplashSearchResponse {
+  results: IUnsplashImage[];
+}

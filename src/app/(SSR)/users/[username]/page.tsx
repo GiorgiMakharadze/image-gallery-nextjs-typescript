@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import { IUserPageProps } from "@/types/pageTypes";
+import { Alert } from "@/components/bootstrap";
 
 async function getUser(username: string): Promise<IUserPageProps> {
   const response = await fetch(
@@ -26,6 +27,11 @@ export default async function Page({ params: { username } }: IUserPageProps) {
   const user = await getUser(username);
   return (
     <div>
+      <Alert>
+        This profile page uses <strong>generateMetadata</strong> to set the{" "}
+        <strong>page title</strong> dynamically from the API response.
+      </Alert>
+
       <h1>{user.username}</h1>
       <p>First name: {user.first_name}</p>
       <p>First name: {user.last_name}</p>
