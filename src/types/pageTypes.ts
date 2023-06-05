@@ -3,8 +3,5 @@ export interface IPageProps {
 }
 
 export interface IUserPageProps {
-  username: string;
-  first_name: string;
-  last_name: string;
   params: { username: string };
 }

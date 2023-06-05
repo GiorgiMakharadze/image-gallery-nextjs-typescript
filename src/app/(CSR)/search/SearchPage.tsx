@@ -1,30 +1,84 @@
 "use client";
-
-import { FormEvent } from "react";
-import { Form, Button } from "react-bootstrap";
+import { FormEvent, useState } from "react";
+import Image from "next/image";
+import { Alert, Form, Button, Spinner } from "react-bootstrap";
+import { IUnsplashImage } from "@/types/unsplashImageTypes";
+import styles from "./SearchPage.module.scss";
 
 export default function SearchPage() {
+  const [searchResults, setSearchResults] = useState<IUnsplashImage[] | null>(
+    null
+  );
+  const [searchResultsLoading, setSearchResultsLoading] = useState(false);
+  const [searchResultsLoadingIsError, setSearchResultsLoadingIsError] =
+    useState(false);
+
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const formData = new FormData(e.target as HTMLFormElement);
     const query = formData.get("query")?.toString().trim();
 
     if (query) {
-      alert(query);
+      try {
+        setSearchResults(null);
+        setSearchResultsLoadingIsError(false);
+        setSearchResultsLoading(true);
+        const response = await fetch("/api/search?query=" + query);
+        const images: IUnsplashImage[] = await response.json();
+        setSearchResults(images);
+      } catch (error) {
+        console.error(error);
+        setSearchResultsLoadingIsError(true);
+      } finally {
+        setSearchResultsLoading(false);
+      }
     }
   }
 
   return (
     <div>
+      <Alert>
+        This page fetches data <strong>client-side</strong>. In order to not
+        leak API credentials, the request is sent to a NextJS{" "}
+        <strong>route handler</strong> that runs on the server. This route
+        handler then fetches the data from the Unsplash API and returns it to
+        the client.
+      </Alert>
+
       <Form onSubmit={handleSubmit}>
         <Form.Group className="mb-3" controlId="search-input">
           <Form.Label>Search query</Form.Label>
-          <Form.Control name="query" placeholder="E.g cars, fitness, ...." />
+          <Form.Control name="query" placeholder="E.g. cats, hotdogs, ..." />
         </Form.Group>
-        <Button type="submit" className="mb-3">
+        <Button type="submit" className="mb-3" disabled={searchResultsLoading}>
           Search
         </Button>
       </Form>
+
+      <div className="d-flex flex-column align-items-center">
+        {searchResultsLoading && <Spinner animation="border" />}
+        {searchResultsLoadingIsError && (
+          <p>Something went wrong. Please try again.</p>
+        )}
+        {searchResults?.length === 0 && (
+          <p>Nothing found. Try a different query!</p>
+        )}
+      </div>
+
+      {searchResults && (
+        <>
+          {searchResults.map((image) => (
+            <Image
+              src={image.urls.raw}
+              width={250}
+              height={250}
+              alt={image.description}
+              key={image.urls.raw}
+              className={styles.image}
+            />
+          ))}
+        </>
+      )}
     </div>
   );
 }

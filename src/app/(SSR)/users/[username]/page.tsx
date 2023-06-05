@@ -1,9 +1,10 @@
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import { IUserPageProps } from "@/types/pageTypes";
+import { IUnsplashUser } from "@/types/unsplashUserTypes";
 import { Alert } from "@/components/bootstrap";
 
-async function getUser(username: string): Promise<IUserPageProps> {
+async function getUser(username: string): Promise<IUnsplashUser> {
   const response = await fetch(
     `https://api.unsplash.com/users/${username}?client_id=${process.env.UNSPLASH_ACCESS_KEY}`
   );
@@ -19,7 +20,7 @@ export async function generateMetadata({
   return {
     title:
       ([user.first_name, user.last_name].filter(Boolean).join(" ") ||
-        user.username) + " - NextJS Image Gallery",
+        user.username) + " - NextJS 13.4 Image Gallery",
   };
 }
 
